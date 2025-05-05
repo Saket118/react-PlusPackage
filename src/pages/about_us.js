@@ -1,18 +1,14 @@
 import React from 'react';
-import Header from './header';
-import Footer from './footer';
 
-const aboutUs = () => (
-  <div>
-    <Header />
-    <div className= "container">
-      <h2>About Us</h2>
-      <hr />
-
-     
-    </div>
-    <Footer />
+const AboutUs = () => (
+  <div className="container my-4">
+    <h2>About Us</h2>
+    <hr />
+    <p>
+      Welcome to our website. We are dedicated to providing valuable content and services.
+      Feel free to explore and learn more about what we offer.
+    </p>
   </div>
 );
 
-export default aboutUs;
+export default AboutUs;

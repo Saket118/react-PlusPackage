@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -29,7 +30,7 @@ const Header = () => (
           <img src="/include/image/logo.png" alt="Logo" height="30" width="30"/>
         </button>
         <div className="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
-          <div className="navbar-nav gap-5">
+          <div className="navbar-nav gap-2 text-center">
             <a className="nav-link  active" aria-current="page" href="/">Home</a>
             <a className="nav-link " href="AboutUs">About Us</a>
             <a className="nav-link " href="EditorialBoard">Editorial Board</a>

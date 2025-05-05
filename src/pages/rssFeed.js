@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-const currentIssue = () => (
+const RssFeed = () => (
   <div>
  
     <div className= "container">
-      <h2>Current Issue</h2>
+    <h2>Rss Feed</h2>
       <hr />
      
     </div>
@@ -13,4 +13,4 @@ const currentIssue = () => (
   </div>
 );
 
-export default currentIssue;
+export default RssFeed;

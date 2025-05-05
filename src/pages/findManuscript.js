@@ -1,11 +1,10 @@
 import React from 'react';
 
-
-const currentIssue = () => (
+const Track_Manuscript = () => (
   <div>
- 
+   
     <div className= "container">
-      <h2>Current Issue</h2>
+      <h2>Track Manuscript</h2>
       <hr />
      
     </div>
@@ -13,4 +12,4 @@ const currentIssue = () => (
   </div>
 );
 
-export default currentIssue;
+export default Track_Manuscript;

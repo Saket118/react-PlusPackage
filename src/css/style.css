@@ -1,0 +1,28 @@
+.vertical-marquee-wrapper {
+    height: 100px; /* Adjust based on how tall you want it */
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee {
+    display: inline-block;
+    animation: scroll-up 20s linear infinite; /* Increased duration to slow down the speed */
+}
+
+.marquee p {
+    margin: 0;
+    padding: 8px 0;
+}
+
+@keyframes scroll-up {
+    0% {
+        transform: translateY(100%); /* Start from the bottom */
+    }
+    100% {
+        transform: translateY(-100%); /* End at the top */
+    }
+}
+
+
+
+  

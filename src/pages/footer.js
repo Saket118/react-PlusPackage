@@ -1,3 +1,4 @@
+// src/pages/footer.js
 import React from 'react';
 
 const Footer = () => (

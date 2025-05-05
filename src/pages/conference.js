@@ -1,11 +1,10 @@
 import React from 'react';
 
-
-const currentIssue = () => (
+const  Conference = () => (
   <div>
- 
+
     <div className= "container">
-      <h2>Current Issue</h2>
+      <h2> Conference</h2>
       <hr />
      
     </div>
@@ -13,4 +12,4 @@ const currentIssue = () => (
   </div>
 );
 
-export default currentIssue;
+export default  Conference;
