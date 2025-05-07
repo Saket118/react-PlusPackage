@@ -4,13 +4,13 @@ import MenuscriptChart from './script/Menuscript'
 const rightSidebar = () => (
   <div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
  <a href='register' className='text-decoration-none' > Join as Author/ Reviewer/ Editor</a>
   </div>
 </div>
 
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
   Most viewed articles
   </div>
 
@@ -26,7 +26,7 @@ const rightSidebar = () => (
   </div>
 </div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
   Search Articles
   </div>
   <div className="card-body">
@@ -47,13 +47,13 @@ const rightSidebar = () => (
 </div>
 
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
  <a href='track-Manuscript' className='text-decoration-none'>Track Manuscript</a>
   </div>
  
 </div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
  <a href='Conference' className='text-decoration-none'>Conference</a>
   </div>
   <div class="card-body">
@@ -69,7 +69,7 @@ const rightSidebar = () => (
   </div>
 </div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
   Manuscript Statistics
   </div>
   <div class="card-body">
@@ -77,12 +77,12 @@ const rightSidebar = () => (
   </div>
 </div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
  <a href='rssFeed'className='text-decoration-none' >RSS feed</a>
   </div>
 </div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
   Most downloaded articles
   </div>
   
@@ -97,7 +97,7 @@ const rightSidebar = () => (
   </div>
 </div>
 <div class="card mt-2 text-center">
-  <div class="card-header bg-success-subtle">
+  <div class="card-header top-header">
   Indexed in
   </div>
  

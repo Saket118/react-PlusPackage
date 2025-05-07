@@ -1,13 +1,10 @@
 import React from 'react';
-
 import PublicationChart from './script/PublicationChart';
 import ArticleChart from './script/ArticleChart';
-import MenuscriptChart from './script/Menuscript';
-
 const LeftSidebar = () => (
   <div>
     <div className="card text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Total Published Articles
       </div>
       <div className="card-body">
@@ -15,7 +12,7 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Subscribe for TOC Alerts
       </div>
       <div className="card-body">
@@ -32,7 +29,7 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Worldwide Visitors
       </div>
       <div className="card-body">
@@ -40,7 +37,7 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         News
       </div>
      
@@ -55,7 +52,7 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Advertisements
       </div>
       <div className="card-body vertical-marquee-wrapper">
@@ -68,12 +65,12 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         <a href='/login' className='text-decoration-none'>Sign in</a> / <a href='/register' className='text-decoration-none'>Sign up</a>
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Publication Statistics
       </div>
       <div className="card-body">
@@ -81,7 +78,7 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Articles Statistics
       </div>
       <div className="card-body">
@@ -89,7 +86,7 @@ const LeftSidebar = () => (
       </div>
     </div>
     <div className="card mt-2 text-center">
-      <div className="card-header bg-success-subtle">
+      <div className="card-header top-header">
         Hit Counter
       </div>
       <div className="card-body">

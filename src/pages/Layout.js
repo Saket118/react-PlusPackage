@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/style.css';
 import Header from './header';
 import Footer from './footer';
 import { Outlet } from 'react-router-dom';
