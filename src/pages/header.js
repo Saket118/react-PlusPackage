@@ -9,7 +9,7 @@ const Header = () => (
     <header>
       <nav>
         <div className="container-fluid d-flex justify-content-end top-header top-header">
-          <a href="/" className="me-3 text-decoration-none text-dark fw-semibold" aria-label="Login to your account">Login</a>
+          <a href="login" className="me-3 text-decoration-none text-dark fw-semibold" aria-label="Login to your account">Login</a>
           <a href="register" className="me-3 text-decoration-none text-dark fw-semibold" aria-label="Register a new account">Register</a>
           <a href="mailto:Saket@gmail.com" className="me-3 text-decoration-none text-dark fw-semibold" aria-label="Email saket@gmail.com">Saket@gmail.com</a>
         </div>

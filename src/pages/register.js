@@ -19,20 +19,49 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [responseMsg, setResponseMsg] = useState('');
 
   const handleInput = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
   };
 
-  const handleValidation = (event) => {
+  const handleValidation = async (event) => {
     event.preventDefault();
     const { tempErrors, isValid } = validateRegisterForm(values);
     setErrors(tempErrors);
 
     if (isValid) {
-      console.log('Form submitted:', values);
-      // Add your API submission logic here
+      const response = await fetch('http://localhost/Reactjs/backend/register_back', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setResponseMsg('Registration successful!');
+        setValues({
+          reg_email: '',
+          reg_pass: '',
+          reg_cpass: '',
+          reg_type: '',
+          reg_title: '',
+          reg_name: '',
+          reg_qual: '',
+          reg_addr: '',
+          reg_city: '',
+          reg_state: '',
+          reg_zip: '',
+          reg_country: '',
+          reg_phone: '',
+        });
+      } else {
+        setResponseMsg(result.message || 'Registration failed.');
+      }
     }
   };
 
@@ -44,10 +73,11 @@ const Register = () => {
         <form onSubmit={handleValidation}>
           <input type="hidden" name="form_type" id="form_type" value="register" />
 
-          {/* Login Details */}
+          {/* LOGIN DETAILS */}
           <fieldset className="border p-3 mb-4">
             <legend className="w-auto px-2">Login Details</legend>
 
+            {/* Email */}
             <div className="row mb-3">
               <label htmlFor="reg_email" className="col-sm-3 col-form-label">Email<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -56,6 +86,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Password */}
             <div className="row mb-3">
               <label htmlFor="reg_pass" className="col-sm-3 col-form-label">Password<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -64,6 +95,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Confirm Password */}
             <div className="row mb-3">
               <label htmlFor="reg_cpass" className="col-sm-3 col-form-label">Confirm Password<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -72,6 +104,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* User Type */}
             <div className="row mb-3">
               <label htmlFor="reg_type" className="col-sm-3 col-form-label">User Type<span className="text-danger">*</span></label>
               <div className="col-sm-4">
@@ -85,10 +118,11 @@ const Register = () => {
             </div>
           </fieldset>
 
-          {/* Personal Details */}
+          {/* PERSONAL DETAILS */}
           <fieldset className="border p-3 mb-4">
             <legend className="w-auto px-2">Personal Details</legend>
 
+            {/* Title */}
             <div className="row mb-3">
               <label htmlFor="reg_title" className="col-sm-3 col-form-label">Title</label>
               <div className="col-sm-4">
@@ -103,6 +137,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Name */}
             <div className="row mb-3">
               <label htmlFor="reg_name" className="col-sm-3 col-form-label">Name<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -111,6 +146,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Qualification */}
             <div className="row mb-3">
               <label htmlFor="reg_qual" className="col-sm-3 col-form-label">Qualification<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -120,10 +156,11 @@ const Register = () => {
             </div>
           </fieldset>
 
-          {/* Contact Details */}
+          {/* CONTACT DETAILS */}
           <fieldset className="border p-3 mb-4">
             <legend className="w-auto px-2">Contact Details</legend>
 
+            {/* Address */}
             <div className="row mb-3">
               <label htmlFor="reg_addr" className="col-sm-3 col-form-label">Address<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -132,6 +169,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* City */}
             <div className="row mb-3">
               <label htmlFor="reg_city" className="col-sm-3 col-form-label">City<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -140,6 +178,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* State */}
             <div className="row mb-3">
               <label htmlFor="reg_state" className="col-sm-3 col-form-label">State<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -148,6 +187,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Zip */}
             <div className="row mb-3">
               <label htmlFor="reg_zip" className="col-sm-3 col-form-label">Zipcode<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -156,20 +196,21 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Country */}
             <div className="row mb-3">
               <label htmlFor="reg_country" className="col-sm-3 col-form-label">Country<span className="text-danger">*</span></label>
               <div className="col-sm-9">
                 <select className="form-select" id="reg_country" name="reg_country" value={values.reg_country} onChange={handleInput}>
                   <option value="" disabled>Country</option>
-                  {/* Replace this with a JavaScript array or API call to fetch countries */}
-                  <option value="Country1">Country1</option>
-                  <option value="Country2">Country2</option>
-                  <option value="Country3">Country3</option>
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
                 </select>
                 {errors.reg_country && <small className="text-danger">{errors.reg_country}</small>}
               </div>
             </div>
 
+            {/* Phone */}
             <div className="row mb-3">
               <label htmlFor="reg_phone" className="col-sm-3 col-form-label">Phone<span className="text-danger">*</span></label>
               <div className="col-sm-9">
@@ -179,10 +220,14 @@ const Register = () => {
             </div>
           </fieldset>
 
+          {/* Submit / Reset */}
           <div className="mb-3 d-flex justify-content-center gap-3">
             <button type="submit" className="btn btn-primary">Register</button>
             <button type="reset" className="btn btn-secondary">Cancel</button>
           </div>
+
+          {/* Response Message */}
+          {responseMsg && <div className="alert alert-info mt-3">{responseMsg}</div>}
         </form>
       </div>
     </div>
