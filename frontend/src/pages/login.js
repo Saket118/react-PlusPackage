@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' }); // Clear error when typing
+    setErrors({ ...errors, [e.target.name]: '' });
   };
 
-  // Validate form
   const validate = () => {
     const newErrors = {};
     if (!formData.email) newErrors.email = 'Email is required';
@@ -21,16 +21,12 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    // Print form data to the console
-    // console.log('Form Data:', formData);
-
     try {
-      const response = await fetch('http://localhost/Reactjs/backend/data', {
+      const response = await fetch('http://localhost/Reactjs/react-PlusPackage/backend/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -40,7 +36,10 @@ const Login = () => {
 
       if (result.success) {
         setMessage('Login successful!');
-        // You can redirect or store token here
+        if (result.token) {
+          localStorage.setItem('authToken', result.token);
+        }
+        navigate('dashboard');
       } else {
         setMessage(result.message || 'Login failed.');
       }

@@ -15,6 +15,7 @@ import EditorialBoard from "./pages/editorial_board";
 import CurrentIssue from "./pages/current_Issue";
 import Conference from './pages/conference';
 import TrackManuscript from './pages/findManuscript';
+import Dashboard from './admin/dashboard';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path="CurrentIssue" element={<CurrentIssue />} />
           <Route path="Conference" element={<Conference />} />
           <Route path="track-manuscript" element={<TrackManuscript />} />
+          <Route path= "Dashboard" element= {<Dashboard/>}/>
+          
         </Route>
       </Routes>
     </Router>

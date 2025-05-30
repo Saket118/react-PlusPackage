@@ -32,7 +32,7 @@ const Register = () => {
     setErrors(tempErrors);
 
     if (isValid) {
-      const response = await fetch('http://localhost/Reactjs/backend/register_back', {
+      const response = await fetch('http://localhost/Reactjs/react-pluspackage/backend/register_back', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
