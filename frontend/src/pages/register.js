@@ -110,7 +110,9 @@ const Register = () => {
               <div className="col-sm-4">
                 <select className="form-select" id="reg_type" name="reg_type" value={values.reg_type} onChange={handleInput}>
                   <option value="" disabled>Select One</option>
+                  <option value="Admin">Admin</option>
                   <option value="Author">Author</option>
+                  <option value="Publisher">Publisher</option>
                   <option value="Reviewer">Reviewer</option>
                 </select>
                 {errors.reg_type && <small className="text-danger">{errors.reg_type}</small>}

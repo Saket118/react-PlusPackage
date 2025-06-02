@@ -16,6 +16,10 @@ import CurrentIssue from "./pages/current_Issue";
 import Conference from './pages/conference';
 import TrackManuscript from './pages/findManuscript';
 import Dashboard from './admin/dashboard';
+import AuthorDashboard from './admin/author/author-dashboard';
+import ReviewerDashboard from './admin/reviewer-dashboard';
+import CertificateGenerator from './admin/author/genrate_certificate';
+import Users from './admin/usersInfo.js';
 
 function App() {
   return (
@@ -23,7 +27,10 @@ function App() {
       <Routes>
         {/* Login route WITHOUT layout */}
         <Route path="/login" element={<Login />} />
-
+        <Route path= "/Dashboard" element= {<Dashboard/>}/>
+        <Route path= "/AuthorDashboard" element= {<AuthorDashboard/>}/>
+        <Route path= "/ReviewerDashboard" element= {<ReviewerDashboard/>}/>
+        <Route path='/users' element = {<Users/>}/> 
         {/* All other routes WITH layout */}
         <Route element={<Layout />}>
           <Route index element={<Index />} />
@@ -39,7 +46,8 @@ function App() {
           <Route path="CurrentIssue" element={<CurrentIssue />} />
           <Route path="Conference" element={<Conference />} />
           <Route path="track-manuscript" element={<TrackManuscript />} />
-          <Route path= "Dashboard" element= {<Dashboard/>}/>
+          <Route path="Certificate" element={<CertificateGenerator />} />
+         
           
         </Route>
       </Routes>
