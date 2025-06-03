@@ -20,6 +20,8 @@ import AuthorDashboard from './admin/author/author-dashboard';
 import ReviewerDashboard from './admin/reviewer-dashboard';
 import CertificateGenerator from './admin/author/genrate_certificate';
 import Users from './admin/usersInfo.js';
+import UserProfile from './admin/user_profile.js';
+
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
         <Route path= "/AuthorDashboard" element= {<AuthorDashboard/>}/>
         <Route path= "/ReviewerDashboard" element= {<ReviewerDashboard/>}/>
         <Route path='/users' element = {<Users/>}/> 
+        <Route path='/UserProfile' element = {<UserProfile/>}/> 
         {/* All other routes WITH layout */}
         <Route element={<Layout />}>
           <Route index element={<Index />} />

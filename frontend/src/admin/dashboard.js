@@ -1,24 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, {  useState } from 'react';
+import { Link } from 'react-router-dom';
+import {logout} from "../utils/auth";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState('');
+  
+  const [userEmail] = useState('');
 
-  useEffect(() => {
-    const email = localStorage.getItem('userEmail');
-    console.log(email);
-    if (!email) {
-      navigate('/login'); // redirect if not logged in
-    } else {
-      setUserEmail(email);
-    }
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.clear(); // Clear all stored data
-    navigate('/login');
-  };
   
 
   return (
@@ -34,7 +21,7 @@ const Dashboard = () => {
         <span className="navbar-brand">Admin Dashboard</span>
         <div className="ms-auto d-flex align-items-center">
           <span className="text-white me-3">Logged in as: <strong>{userEmail}</strong></span>
-          <button className="btn btn-light btn-sm" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-light btn-sm" onClick={logout}>Logout</button>
         </div>
       </nav>
 

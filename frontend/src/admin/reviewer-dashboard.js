@@ -1,21 +1,20 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { logout } from '../utils/auth';
 
-const Dashboard = () => {
-  const navigate = useNavigate();
+const ReviewerDashboard = () => {
 
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear auth token
-    navigate('/login');
-  };
 
+ 
   return (
     <div className="container-fluid p-0">
       {/* Top Bar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary px-4">
         <span className="navbar-brand">reviewer Dashboard</span>
         <div className="ms-auto d-flex align-items-center">
-          <button className="btn btn-light btn-sm" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-light btn-sm" onClick={logout}>
+            Logout
+          </button>
         </div>
       </nav>
 
@@ -26,16 +25,24 @@ const Dashboard = () => {
           <h5 className="mb-3">Menu</h5>
           <ul className="nav flex-column">
             <li className="nav-item">
-              <Link to="/dashboard" className="nav-link text-dark">🏠 Home</Link>
+              <Link to="/dashboard" className="nav-link text-dark">
+                🏠 Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/dashboard/users" className="nav-link text-dark">👥 Users</Link>
+              <Link to="/dashboard/users" className="nav-link text-dark">
+                👥 Users
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/dashboard/posts" className="nav-link text-dark">📝 Posts</Link>
+              <Link to="/dashboard/posts" className="nav-link text-dark">
+                📝 Posts
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/dashboard/settings" className="nav-link text-dark">⚙️ Settings</Link>
+              <Link to="/dashboard/settings" className="nav-link text-dark">
+                ⚙️ Settings
+              </Link>
             </li>
           </ul>
         </div>
@@ -51,4 +58,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ReviewerDashboard;

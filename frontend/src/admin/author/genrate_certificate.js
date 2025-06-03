@@ -7,26 +7,35 @@ const CertificateGenerator = () => {
   const [templateImage, setTemplateImage] = useState('/path/to/default-certificate.png');
   const [imageUrl, setImageUrl] = useState('');
 
+  // Handle image file upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => setTemplateImage(reader.result);
-    if (file) reader.readAsDataURL(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setTemplateImage(reader.result);
+      reader.readAsDataURL(file);
+    }
   };
 
+  // Handle image loading from URL
   const handleUrlLoad = () => {
-    if (imageUrl) setTemplateImage(imageUrl);
+    if (imageUrl.trim()) {
+      setTemplateImage(imageUrl.trim());
+    }
   };
 
   return (
     <div className="container-fluid p-4">
       <h3>Certificate Generator</h3>
 
-      <div className="d-flex align-items-center gap-3 mb-3">
+      {/* Upload or URL input */}
+      <div className="d-flex align-items-center gap-3 mb-3 flex-wrap">
         <select className="form-select w-auto">
           <option value="original">Original</option>
         </select>
+
         <span>OR Use Image URL:</span>
+
         <input
           type="text"
           placeholder="Enter image URL (e.g. https://...)"
@@ -34,7 +43,11 @@ const CertificateGenerator = () => {
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
-        <button className="btn btn-primary" onClick={handleUrlLoad}>Load URL</button>
+
+        <button className="btn btn-primary" onClick={handleUrlLoad}>
+          Load URL
+        </button>
+
         <input
           type="file"
           accept="image/*"
@@ -43,29 +56,30 @@ const CertificateGenerator = () => {
         />
       </div>
 
+      {/* Editor and Preview */}
       <div className="row">
+        {/* Text Editor */}
         <div className="col-md-6 mb-3">
           <CKEditor
             editor={ClassicEditor}
             data={editorData}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              setEditorData(data);
-            }}
+            onChange={(event, editor) => setEditorData(editor.getData())}
             config={{
-              placeholder: 'Please type here...',
+              placeholder: 'Type certificate content here...',
             }}
           />
         </div>
 
+        {/* Live Certificate Preview */}
         <div className="col-md-6">
           <div
             className="border p-2"
             style={{
               backgroundImage: `url(${templateImage})`,
               backgroundSize: 'cover',
+              backgroundPosition: 'center',
               minHeight: '400px',
-              position: 'relative'
+              position: 'relative',
             }}
           >
             <div
@@ -75,7 +89,12 @@ const CertificateGenerator = () => {
                 top: '20%',
                 left: '10%',
                 color: '#000',
-                fontFamily: 'serif'
+                fontFamily: 'serif',
+                backgroundColor: 'rgba(255,255,255,0.8)',
+                padding: '10px',
+                borderRadius: '6px',
+                maxWidth: '80%',
+                wordWrap: 'break-word',
               }}
             />
           </div>

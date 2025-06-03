@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout as logoutUtil } from '../../utils/auth';
 
 const AuthorDashboard = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false); // State to manage dropdown
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken'); // Clear auth token
-    localStorage.removeItem('email'); // Clear email
-    navigate('/login');
-  };
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const logout = () => {
+    logoutUtil(); // clear tokens
+    navigate('/login'); // navigate to login page after logout
   };
 
   return (
@@ -23,7 +20,7 @@ const AuthorDashboard = () => {
         <span className="navbar-brand">Author Dashboard</span>
         <div className="ms-auto d-flex align-items-center">
           <span className="text-white me-3">Welcome, Author</span>
-          <button className="btn btn-light btn-sm" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-light btn-sm" onClick={logout}>Logout</button>
         </div>
       </nav>
 
@@ -37,11 +34,10 @@ const AuthorDashboard = () => {
               <button className="nav-link text-dark" onClick={toggleDropdown}>
                 📁 Manage Content
               </button>
-              <ul className={`nav flex-column ms-3 ${isOpen ? '' : ''}`}>
+              <ul className={`nav flex-column ms-3 ${isOpen ? '' : 'd-none'}`}>
                 <li className="nav-item">
                   <Link to="/certificate" className="nav-link text-dark">📝 certificate</Link>
                 </li>
-          
               </ul>
             </li>
             <li className="nav-item">
