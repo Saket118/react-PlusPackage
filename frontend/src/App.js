@@ -23,6 +23,7 @@ import CertificateGenerator from './admin/author/genrate_certificate';
 import Users from './admin/usersInfo.js';
 import UserProfile from './admin/user_profile.js';
 import AdminAddUser from './admin/Admin_addUser.js';
+import AdminEditUser from './admin/Admin_EditUser.js';
 
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -71,6 +72,14 @@ function App() {
           element={
             <ProtectedRoute>
               <AdminAddUser />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/EditUser"
+          element={
+            <ProtectedRoute>
+              <AdminEditUser />
             </ProtectedRoute>
           }
         />

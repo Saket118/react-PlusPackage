@@ -52,6 +52,7 @@ const RegistrationForm = () => {
       .then(data => {
         setResponseMsg("User registered successfully!");
         console.log(data);
+        window.location.href = "/users";
       })
       .catch(error => {
         setResponseMsg("Error registering user: " + error.message);
@@ -93,14 +94,9 @@ const RegistrationForm = () => {
               <Link to="/dashboard" className="nav-link text-white">🏠 Home</Link>
             </li>
             <li className="nav-item mb-2">
-              <Link to="/dashboard/users" className="nav-link active bg-white text-primary fw-semibold rounded px-3 py-2">👥 Users</Link>
+              <Link to="/users" className="nav-link active bg-white text-primary fw-semibold rounded px-3 py-2">👥 Users</Link>
             </li>
-            <li className="nav-item mb-2">
-              <Link to="/dashboard/posts" className="nav-link text-white">📝 Posts</Link>
-            </li>
-            <li className="nav-item mt-auto">
-              <Link to="/dashboard/settings" className="nav-link text-white">⚙️ Settings</Link>
-            </li>
+            
           </ul>
         </aside>
 

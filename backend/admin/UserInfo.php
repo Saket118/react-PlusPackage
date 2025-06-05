@@ -12,7 +12,7 @@ if ($con->connect_error) {
 }
 
 // Fixed SQL: Removed extra comma before FROM
-$sql = "SELECT `email`, `name`, `qualification`, `address`, `city`, `state`, `country`, `phone`, `user_type`, `title`
+$sql = "SELECT `id`,`email`, `name`, `qualification`, `address`, `city`, `state`, `country`, `phone`, `user_type`, `title`
         FROM `users`
         ORDER BY `user_type` ASC, `name` ASC";
 

@@ -1,9 +1,17 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // Adjust for production
-header('Access-Control-Allow-Methods: DELETE');
+// Allow all origins and required headers/methods
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json");
 
-include_once "../db.php"; // Make sure this sets $con as the DB connection
+// Handle preflight request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+include_once "../db.php"; // Ensure $con is your DB connection
 
 if ($con->connect_error) {
     http_response_code(500);
