@@ -6,14 +6,17 @@ import { faMapMarkerAlt, faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-
 const UserProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [user, setUser] = useState(location.state?.user || null);
 
   useEffect(() => {
+    const name = localStorage.getItem('userName');
     const email = localStorage.getItem('userEmail');
     if (!email) {
       navigate('/login');
     } else {
+      if (name) setUserName(name);
       setUserEmail(email);
       if (!user) {
         fetch(`http://localhost/Reactjs/react-PlusPackage/backend/admin/UserInfo?email=${email}`)
@@ -56,7 +59,7 @@ const UserProfile = () => {
         <span className="navbar-brand fw-semibold fs-4">Admin Dashboard</span>
         <div className="ms-auto d-flex align-items-center gap-3">
           <span className="text-white fs-6">
-            Logged in as: <strong>{userEmail}</strong>
+            Logged in as: <strong>{userName} </strong>
           </span>
           <button className="btn btn-outline-light btn-sm px-3" onClick={handleLogout}>
             Logout
@@ -76,7 +79,7 @@ const UserProfile = () => {
               </Link>
             </li>
             <li className="nav-item mb-2">
-              <Link to="/dashboard/users" className="nav-link active bg-white text-primary fw-semibold px-3 py-2 rounded shadow-sm">
+              <Link to="/users" className="nav-link active bg-white text-primary fw-semibold px-3 py-2 rounded shadow-sm">
                 👥 Users
               </Link>
             </li>

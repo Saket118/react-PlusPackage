@@ -1,9 +1,13 @@
 <?php
-include_once "db.php";
+require 'vendor/autoload.php';
+include_once "db.php"; // Your DB connection file
+
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -11,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+$secretKey = "your_super_secret_key"; // Change this to a secure secret key
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json = file_get_contents("php://input");
@@ -32,9 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = trim($data['email']);
     $password = trim($data['password']);
-    $userType = trim(strtolower($data['userType'])); // admin, author, reviewer
+    $userType = strtolower(trim($data['userType']));
 
-    // Validate allowed roles
     $allowedRoles = ['admin', 'author', 'reviewer'];
     if (!in_array($userType, $allowedRoles)) {
         echo json_encode([
@@ -44,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Assuming all users are stored in one `users` table with a `role` column
-    $stmt = $con->prepare("SELECT id, email, password, user_type FROM users WHERE email = ? AND user_type = ?");
+    $stmt = $con->prepare("SELECT id,name, email, password, user_type FROM users WHERE email = ? AND user_type = ?");
     $stmt->bind_param("ss", $email, $userType);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -54,11 +55,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
+            $issuedAt = time();
+            $expire = $issuedAt + (60 * 60); // Token valid for 1 hour
+
+            $payload = [
+                "iat" => $issuedAt,
+                "exp" => $expire,
+                "data" => [
+                    "email" => $user['email'],
+                    "userType" => $user['user_type'],
+                    "name" => $user['name']
+                ]
+            ];
+         
+
+            $jwt = JWT::encode($payload, $secretKey, 'HS256');
+
             echo json_encode([
                 'success' => true,
                 'message' => 'Login successful.',
-                'token' => base64_encode($user['email'] . "|" . $user['user_type']),
-                'userType' => $user['user_type']
+                'token' => $jwt,
+                'userType' => $user['user_type'],
+                'name' => $user['name']  // 👈 Add this line
             ]);
         } else {
             echo json_encode([

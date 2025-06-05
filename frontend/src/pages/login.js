@@ -1,55 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setToken } from '../utils/auth';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    userType: 'admin' // default
+    userType: 'admin'
   });
 
-  const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' });
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email format';
-    if (!formData.password) newErrors.password = 'Password is required';
-    if (!formData.userType) newErrors.userType = 'User type is required';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
 
     try {
       const response = await fetch('http://localhost/Reactjs/react-PlusPackage/backend/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       const result = await response.json();
 
-      if (result.success) {
-        setMessage('Login successful!');
-
-        // Store session data
-        localStorage.setItem('authToken', result.token);
+      if (result.success && result.token) {
+        setToken(result.token);
         localStorage.setItem('userType', formData.userType);
         localStorage.setItem('userEmail', formData.email);
-      console.log(  localStorage.setItem('userEmail', formData.email));
-
-        // Redirect based on user type
+        localStorage.setItem('userName', result.name); // 👈 Add this
+                console.log(result);
         switch (formData.userType) {
           case 'admin':
             navigate('/dashboard');
@@ -67,7 +51,7 @@ const Login = () => {
         setMessage(result.message || 'Login failed.');
       }
     } catch (error) {
-      setMessage('An error occurred. Please try again.');
+      setMessage('Something went wrong.');
     }
   };
 
@@ -80,35 +64,30 @@ const Login = () => {
             <div className="form-floating mb-3">
               <input
                 type="email"
-                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                id="email"
+                className="form-control"
                 name="email"
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
               />
-              <label htmlFor="email">Email address</label>
-              {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+              <label>Email address</label>
             </div>
 
             <div className="form-floating mb-3">
               <input
                 type="password"
-                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                id="password"
+                className="form-control"
                 name="password"
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
               />
-              <label htmlFor="password">Password</label>
-              {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+              <label>Password</label>
             </div>
 
             <div className="form-floating mb-3">
               <select
-                className={`form-select ${errors.userType ? 'is-invalid' : ''}`}
-                id="userType"
+                className="form-select"
                 name="userType"
                 value={formData.userType}
                 onChange={handleChange}
@@ -117,16 +96,12 @@ const Login = () => {
                 <option value="author">Author</option>
                 <option value="reviewer">Reviewer</option>
               </select>
-              <label htmlFor="userType">User Type</label>
-              {errors.userType && <div className="invalid-feedback">{errors.userType}</div>}
+              <label>User Type</label>
             </div>
 
             <button type="submit" className="btn btn-primary w-100">Login</button>
           </form>
-
-          {message && (
-            <p className="mt-3 text-center text-danger">{message}</p>
-          )}
+          {message && <p className="mt-3 text-danger text-center">{message}</p>}
         </div>
       </div>
     </div>

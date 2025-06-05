@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faMapMarkerAlt, faPhoneAlt, faEnvelope, faUserEdit, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faMapMarkerAlt, faPhoneAlt, faEnvelope, faUserEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Users = () => {
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  
   const [users, setUsers] = useState([]);
   const [activeTab, setActiveTab] = useState('admin');
 
   useEffect(() => {
+    const name = localStorage.getItem('userName');
     const email = localStorage.getItem('userEmail');
     if (!email) {
       navigate('/login');
     } else {
-      setUserEmail(email);
+   
+      setUserName(name);
     }
 
     fetch('http://localhost/Reactjs/react-PlusPackage/backend/admin/UserInfo')
@@ -34,7 +37,7 @@ const Users = () => {
   };
 
   const getUsersByType = (type) => users.filter(user => user.user_type.toLowerCase() === type);
-
+    
   const renderUserCards = (userType) => {
     const filteredUsers = getUsersByType(userType);
     if (filteredUsers.length === 0) {
@@ -42,56 +45,92 @@ const Users = () => {
     }
     return (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        {filteredUsers.map(user => (
-          <div key={user.id} className="col">
-            <div className="card h-100 shadow-sm border-0 rounded-3">
-              <div className="card-header bg-primary text-white text-center fw-semibold">
-                {user.user_type || 'User'}
-              </div>
-              <div className="card-body d-flex flex-column align-items-center text-center p-3">
-                <img 
-                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
-                  alt="avatar" 
-                  className="rounded-circle mb-3 border border-2 border-primary"
-                  width="80" 
-                  height="80" 
-                  style={{ objectFit: 'cover' }}
-                />
-                <h5 className="card-title mb-1 text-truncate" style={{ maxWidth: '100%' }}>
-                  {user.name}
-                </h5>
-                <p className="text-muted small mb-0">
-                  <FontAwesomeIcon icon={faMapMarkerAlt} className="me-1 text-secondary" /> {user.city || 'N/A'}
-                </p>
-                <p className="text-muted small mb-0">
-                  <FontAwesomeIcon icon={faPhoneAlt} className="me-1 text-secondary" /> {user.phone || 'N/A'}
-                </p>
-                <p className="text-muted small mb-3 text-truncate" style={{ maxWidth: '100%' }}>
-                  <FontAwesomeIcon icon={faEnvelope} className="me-1 text-secondary" /> {user.email}
-                </p>
-              </div>
-              <div className="card-footer d-flex justify-content-center gap-3 bg-white border-0 pb-3 pt-2">
-                <button 
-                  className="btn btn-sm btn-outline-success rounded-circle shadow-sm"
-                  aria-label="Edit User"
-                  title="Edit User"
-                >
-                  <FontAwesomeIcon icon={faUserEdit} />
-                </button>
-                <button
-      className="btn btn-sm btn-outline-primary rounded-circle shadow-sm"
-      aria-label="View User"
-      title="View User"
-      onClick={() => navigate('/UserProfile', { state: { user } })}
-    >
-      <FontAwesomeIcon icon={faEye} />
-    </button>
+        {filteredUsers.map(user => {
+          console.log(user);
+          return (
+            <div key={user.id} className="col">
+              <div className="card h-100 shadow-sm border-0 rounded-3">
+                <div className="card-header bg-primary text-white text-center fw-semibold">
+                  {user.user_type || 'User'}
+                </div>
+                <div className="card-body d-flex flex-column align-items-center text-center p-3">
+                  <img 
+                    src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
+                    alt="avatar" 
+                    className="rounded-circle mb-3 border border-2 border-primary"
+                    width="80" 
+                    height="80" 
+                    style={{ objectFit: 'cover' }}
+                  />
+                  <h5 className="card-title mb-1 text-truncate" style={{ maxWidth: '100%' }}>
+                    {user.name}
+                  </h5>
+                  <p className="text-muted small mb-0">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="me-1 text-secondary" /> {user.city || 'N/A'}
+                  </p>
+                  <p className="text-muted small mb-0">
+                    <FontAwesomeIcon icon={faPhoneAlt} className="me-1 text-secondary" /> {user.phone || 'N/A'}
+                  </p>
+                  <p className="text-muted small mb-3 text-truncate" style={{ maxWidth: '100%' }}>
+                    <FontAwesomeIcon icon={faEnvelope} className="me-1 text-secondary" /> {user.email}
+                  </p>
+                </div>
+                <div className="card-footer d-flex justify-content-center gap-3 bg-white border-0 pb-3 pt-2">
+                  <button 
+                    className="btn btn-sm btn-outline-success rounded-circle shadow-sm"
+                    aria-label="Edit User"
+                    title="Edit User"
+                  >
+                    <FontAwesomeIcon icon={faUserEdit} />
+                  </button>
+                  <button
+                    className="btn btn-sm btn-outline-primary rounded-circle shadow-sm"
+                    aria-label="View User"
+                    title="View User"
+                    onClick={() => navigate('/UserProfile', { state: { user } })}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                  </button>
+                  <button
+                    className="btn btn-sm btn-outline-danger rounded-circle shadow-sm"
+                    aria-label="Delete User"
+                    title="Delete User"
+                    onClick={() => handleDeleteUser(user.id)}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
+  };
+
+  const handleDeleteUser = (userId) => {
+    fetch(`http://localhost/Reactjs/react-PlusPackage/backend/admin/DeleteUser/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: userId }),
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (data.success) {
+        setUsers(users.filter(user => user.id !== userId));
+        console.log('User deleted successfully:', data);
+      } else {
+        console.error('Error deleting user:', data.message);
+      }
+    })
+    .catch(err => console.error('Error deleting user:', err));
   };
 
   return (
@@ -107,7 +146,7 @@ const Users = () => {
         <span className="navbar-brand fw-semibold fs-4">Admin Dashboard</span>
         <div className="ms-auto d-flex align-items-center gap-3">
           <span className="text-white fs-6">
-            Logged in as: <strong>{userEmail}</strong>
+            Logged in as:<strong> {userName} </strong>
           </span>
           <button className="btn btn-light btn-sm px-3 shadow" onClick={handleLogout}>
             Logout
@@ -127,7 +166,7 @@ const Users = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/dashboard/users" className="nav-link active bg-white text-primary fs-6 px-3 py-2 rounded shadow-sm">
+              <Link to="/users" className="nav-link active bg-white text-primary fs-6 px-3 py-2 rounded shadow-sm">
                 👥 Users
               </Link>
             </li>
@@ -149,7 +188,8 @@ const Users = () => {
           <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <h2 className="mb-0 text-primary fw-bold">Users</h2>
             <button className="btn btn-success shadow-sm d-flex align-items-center gap-2 px-4 py-2">
-              <FontAwesomeIcon icon={faUserPlus} size="lg" /> Add New User
+              <FontAwesomeIcon icon={faUserPlus} size="lg" /> 
+              <a href='/AddUser' className="text-decoration-none">Add User</a>
             </button>
           </div>
 

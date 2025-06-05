@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Layout from './pages/Layout';
 import Index from './pages/index';
 import Register from "./pages/register";
@@ -17,24 +18,73 @@ import Conference from './pages/conference';
 import TrackManuscript from './pages/findManuscript';
 import Dashboard from './admin/dashboard';
 import AuthorDashboard from './admin/author/author-dashboard';
-import ReviewerDashboard from './admin/reviewer-dashboard';
+import ReviewerDashboard from './admin/reviewer/reviewer-dashboard.js';
 import CertificateGenerator from './admin/author/genrate_certificate';
 import Users from './admin/usersInfo.js';
 import UserProfile from './admin/user_profile.js';
+import AdminAddUser from './admin/Admin_addUser.js';
 
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Login route WITHOUT layout */}
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
-        <Route path= "/Dashboard" element= {<Dashboard/>}/>
-        <Route path= "/AuthorDashboard" element= {<AuthorDashboard/>}/>
-        <Route path= "/ReviewerDashboard" element= {<ReviewerDashboard/>}/>
-        <Route path='/users' element = {<Users/>}/> 
-        <Route path='/UserProfile' element = {<UserProfile/>}/> 
-        {/* All other routes WITH layout */}
+        
+        {/* Protected admin routes */}
+        <Route
+          path="/Dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AuthorDashboard"
+          element={
+            <ProtectedRoute>
+              <AuthorDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ReviewerDashboard"
+          element={
+            <ProtectedRoute>
+              <ReviewerDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AddUser"
+          element={
+            <ProtectedRoute>
+              <AdminAddUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/UserProfile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="Certificate" element={ <ProtectedRoute><CertificateGenerator /></ProtectedRoute>} />
+
+        {/* Routes with common Layout */}
         <Route element={<Layout />}>
           <Route index element={<Index />} />
           <Route path="register" element={<Register />} />
@@ -49,8 +99,6 @@ function App() {
           <Route path="CurrentIssue" element={<CurrentIssue />} />
           <Route path="Conference" element={<Conference />} />
           <Route path="track-manuscript" element={<TrackManuscript />} />
-          <Route path="Certificate" element={<CertificateGenerator />} />
-         
           
         </Route>
       </Routes>

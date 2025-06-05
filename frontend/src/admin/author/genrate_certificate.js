@@ -6,13 +6,24 @@ const CertificateGenerator = () => {
   const [editorData, setEditorData] = useState('');
   const [templateImage, setTemplateImage] = useState('/path/to/default-certificate.png');
   const [imageUrl, setImageUrl] = useState('');
+  
+  // Define the images state
+  const [images, setImages] = useState([
+    { path: '/path/to/image1.png', name: 'Image 1' },
+    { path: '/path/to/image2.png', name: 'Image 2' },
+    // Add more images as needed
+  ]);
 
   // Handle image file upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => setTemplateImage(reader.result);
+      reader.onloadend = () => {
+        const newImage = { path: reader.result, name: file.name };
+        setImages((prevImages) => [...prevImages, newImage]);
+        setTemplateImage(reader.result); // Set the uploaded image as the template
+      };
       reader.readAsDataURL(file);
     }
   };
@@ -20,7 +31,9 @@ const CertificateGenerator = () => {
   // Handle image loading from URL
   const handleUrlLoad = () => {
     if (imageUrl.trim()) {
-      setTemplateImage(imageUrl.trim());
+      const newImage = { path: imageUrl.trim(), name: 'Custom URL Image' };
+      setImages((prevImages) => [...prevImages, newImage]);
+      setTemplateImage(imageUrl.trim()); // Set the URL image as the template
     }
   };
 
@@ -31,7 +44,9 @@ const CertificateGenerator = () => {
       {/* Upload or URL input */}
       <div className="d-flex align-items-center gap-3 mb-3 flex-wrap">
         <select className="form-select w-auto">
-          <option value="original">Original</option>
+          {images.map((image, index) => (
+            <option key={index} value={image.path}>{image.name}</option>
+          ))}
         </select>
 
         <span>OR Use Image URL:</span>
