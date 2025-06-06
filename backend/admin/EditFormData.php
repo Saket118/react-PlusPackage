@@ -1,8 +1,11 @@
 <?php
-include_once "../db.php"; // Your DB connection file
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+
+include_once "../db.php"; // Adjust path as needed
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $userId = $_GET['userId'];
+    $userId = isset($_GET['userId']) ? intval($_GET['userId']) : 0;
 
     if (!$userId) {
         echo json_encode(['success' => false, 'message' => 'User ID is required.']);
@@ -16,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
+
+        // Prepend image path if image exists
+        if (!empty($user['image'])) {
+            $user['image'] = 'http://localhost/Reactjs/react-PlusPackage/backend/uploads/' . $user['image'];
+        }
+
         echo json_encode(['success' => true, 'user' => $user]);
     } else {
         echo json_encode(['success' => false, 'message' => 'User not found.']);
@@ -24,3 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Only GET requests are allowed.']);
 }
+?>
